@@ -25,7 +25,7 @@ SECRET_KEY = '92)z48+pixmu0_4rn+7&4*y95v7(x9@f4mv=ur^y)#_h3u()e%'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS =  ['phiture.herokuapp.com', '.yourdomain.com']
+ALLOWED_HOSTS =  ['phiture.herokuapp.com', '.yourdomain.com', '127.0.0.1']
 
 
 # Application definition
@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'storages',
 ]
 
 MIDDLEWARE = [
@@ -114,6 +115,7 @@ USE_L10N = True
 USE_TZ = True
 
 
+from phiture.aws.conf import *
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
