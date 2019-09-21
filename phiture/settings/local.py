@@ -115,14 +115,14 @@ USE_L10N = True
 USE_TZ = True
 
 
-from phiture.aws.conf import *
+# from phiture.aws.conf import *
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
 
-STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
-DEFAULT_FILE_STORAGE = 'django.core.files.storage.FileSystemStorage'
+# STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
+# DEFAULT_FILE_STORAGE = 'django.core.files.storage.FileSystemStorage'
 
 
 CORS_REPLACE_HTTPS_REFERER      = False
