@@ -5,6 +5,7 @@ AWS_FILE_EXPIRE = 200
 AWS_PRELOAD_METADATA = True
 AWS_QUERYSTRING_AUTH = True
 
+
 DEFAULT_FILE_STORAGE = 'phiture.aws.utils.MediaRootS3BotoStorage'
 STATICFILES_STORAGE = 'phiture.aws.utils.StaticRootS3BotoStorage'
 AWS_STORAGE_BUCKET_NAME = 'phiture-bucket'
