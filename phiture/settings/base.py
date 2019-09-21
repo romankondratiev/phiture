@@ -25,7 +25,7 @@ SECRET_KEY = '92)z48+pixmu0_4rn+7&4*y95v7(x9@f4mv=ur^y)#_h3u()e%'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS =  ['phiture.herokuapp.com', '.yourdomain.com']
 
 
 # Application definition
