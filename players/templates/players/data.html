@@ -1,0 +1,158 @@
+
+
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<style type="text/css">
+  li{
+    padding: 5px;
+  }
+
+  .row{
+    padding-top: 20px;
+  }
+
+  .form-control{
+    border-radius: 2rem !important;
+  }
+</style>
+    <title>Phiture</title>
+  </head>
+  <body>
+
+
+
+
+<div class='row'>
+  <div class='col-5 mx-auto'>
+    <h1 class='text-center'>Search for players</h1>
+</div>
+</div>
+
+
+
+<div class='row'>
+  <div class='col-5 mx-auto'>
+<form action='{% url "query" %}' class="search-form form">
+	<div class='input-group'>
+		<input class="form-control" id='searchAutoComplete' type="text" style="height:50px" placeholder="Enter Name, country or club of the player" name='q' value='{{ request.GET.q }}' aria-label="Search">
+		<div class="input-group-append">
+			<button class="btn" style="margin-left: 5px; font-size: 1.2em" type='submit'><i class="fa fa-search fa-1x"></i></button>
+		</div>
+	</div>
+</form>
+</div>
+</div>
+
+<div class='row'>
+  <div class='col'>
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th>That's me</th>
+      <th>Name</th>
+      <th>Age</th>
+      <th>Nationality</th>
+      <th>Club</th>
+      <th>Score</th>
+    </tr>
+  </thead>
+  <tbody>
+    
+{% for obj in object_list %} 
+      <tr>
+         <td> <img src='{{ obj.photo }}' alt='Broken link'></td>
+        <td>{{ obj.name }}</td>
+        <td>{{ obj.age }}</td>
+        <td>{{ obj.nationality }}</td>
+          <td>{{ obj.club }}</td>
+        <td>{{ obj.overall }}</td>
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>
+</div>
+</div>
+
+
+
+
+<div class='row '>
+  <div class='col-2 mx-auto'>
+<ul class="pagination">
+
+{% if page_obj.has_previous %}
+    <li><a href="?page={{ page_obj.previous_page_number }}"><i class="fa fa-chevron-left prev btn btn-dark" aria-hidden="true"></i></a></li>
+{% else %}
+    <li class="disabled"><span><i class="fa fa-chevron-left btn btn-dark" aria-hidden="true"></i></span></li>
+{% endif %}
+
+{% if page_obj.number|add:'-4' > 1 %}
+    <li><a href="?page={{ page_obj.number|add:'-5' }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">&hellip;</a></li>
+{% endif %}
+
+{% for i in page_obj.paginator.page_range %}
+    {% if page_obj.number == i %}
+        <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+    {% elif i > page_obj.number|add:'-5' and i < page_obj.number|add:'5' %}
+        <li><a href="?page={{ i }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">{{ i }}  </a></li>
+    {% endif %}
+{% endfor %}
+
+{% if page_obj.paginator.num_pages > page_obj.number|add:'4' %}
+    <li><a href="?page={{ page_obj.number|add:'5' }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">&hellip;</a></li>
+{% endif %}
+
+{% if page_obj.has_next %}
+    <li><a href="?page={{ page_obj.next_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}"><i class="fa fa-chevron-right btn btn-dark" aria-hidden="true"></i></a></li>
+{% else %}
+    <li class="disabled"><span><i class="fa fa-chevron-right btn btn-dark" aria-hidden="true"></i></span></li>
+{% endif %}
+
+</ul>
+</div>
+</div>
+
+<!-- <div class="prev_next">
+    {% if page_obj.has_previous %}
+        <a class="prev btn btn-dark" href="?page={{ page_obj.previous_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">Prev</a>
+    {% endif %}
+    {% if page_obj.has_next %}
+        <a class="next btn btn-dark" href="?page={{ page_obj.next_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">Next</a>
+    {% endif %}
+    <div class="pages">
+        <ul>
+        {% for pg in paginator.page_range %}
+            {% if page_obj.number == pg %}
+                <li><a href="?page={{pg}}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}" class="btn btn-default">{{pg}}</a></li>
+            {% else %}
+                <li><a href="?page={{pg}}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}" class="btn">{{pg}}</a></li>
+            {% endif %}
+        {% endfor %}
+        </ul>
+    </div>
+    <span class="clear_both"></span>
+</div>
+ -->
+
+
+
+
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script src="https://kit.fontawesome.com/0d5fe028d4.js" crossorigin="anonymous"></script>
+  </body>
+</html>
+
+

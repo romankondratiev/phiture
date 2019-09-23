@@ -16,6 +16,11 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
+from django.conf.urls import url, include
+from players.views import dataview, SearchView
+
 urlpatterns = [
     path('admin/', admin.site.urls),
+    url(r'^data/$', dataview, name='data'),
+    url(r'^$', SearchView.as_view(), name='query'),
 ]
