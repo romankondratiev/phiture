@@ -6,6 +6,7 @@ pip-selfcheck.json
 
 #settings
 settings/
+phiture/settings/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

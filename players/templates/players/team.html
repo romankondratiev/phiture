@@ -17,6 +17,10 @@
       .form-control{
         border-radius: 2rem !important;
       }
+      a{
+        color: #29ef8f !important;
+        text-decoration: none;
+      }
     </style>
     <title>Phiture</title>
   </head>
@@ -26,13 +30,13 @@
     <div class='row'>
       <div class='col-11 mx-auto text-left'>
         <h5 Your Budget {{budget}} >
-        <a class='' href='{% url "home" %}'> Go back </a> </h5>
+        <a class='' href='{% url "home" %}'> Go back <i class="fas fa-home"></i> </a> </h5>
       </div>
     </div>
 
     <div class='row'>
       <div class='col-5 mx-auto'>
-        <h5 class='text-center'>Your current budget is {{budget}} $</h5>
+        <h5 class='text-center'>Your current budget is {{budget}} €</h5>
           <h5 class='text-center'>{% if not object_list %}
           Be more generous. Put more money! {% else %} The average overall score of your players is {{ avg.overall__avg|floatformat }}
           {% endif %}</h5>
@@ -53,7 +57,7 @@
             <th>Score</th>
             <th>Position</th>
             <th>Value</th>
-            <th>Value in $</th>
+            <th>Value in €</th>
           </tr>
         </thead>
         <tbody>
