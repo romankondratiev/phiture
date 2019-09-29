@@ -5,8 +5,8 @@ include/
 pip-selfcheck.json
 
 #settings
-settings/
-phiture/settings/
+# settings/
+# phiture/settings/
 
 aws/
 phiture/aws/
