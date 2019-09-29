@@ -8,6 +8,9 @@ pip-selfcheck.json
 settings/
 phiture/settings/
 
+aws/
+phiture/aws/
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
