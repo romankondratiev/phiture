@@ -14,12 +14,13 @@ from django.views.generic.edit import FormView
 from django.db.models import Avg
 
 
-
+# SearchView https://phiture.herokuapp.com/search
 class SearchView(ListView):
 	template_name = "players/search.html"
 	paginate_by = 10
 	
-	#table = read_table(os.path.join(BASE_DIR, 'data.csv'))
+	# To populate empty database with data from .csv file
+	#table = read_table(os.path.join(BASE_DIR, 'data.csv')) 
 
 	def get_queryset(self, *args, **kwargs):
 		query=self.request.GET.get('q', None)
@@ -30,34 +31,32 @@ class SearchView(ListView):
 		return queryset
 
 
-
-class HomeView(FormView):
+# HomeView https://phiture.herokuapp.com/
+class HomeView(FormView): 
 	template_name = "players/home.html"
-	paginate_by = 10
 	form_class = TeamForm
 	success_url = '/team'
 
 	def form_valid(self, form):
-		budget = form.cleaned_data.get('budget')
-		self.request.session['bla'] = form.cleaned_data.get('budget')
+		self.request.session['budget'] = form.cleaned_data.get('budget') #saving user input in current session
 		return super(HomeView, self).form_valid(form)
 
 
-
-class TeamView(ListView): # Go to Result if team is found
+# TeamView https://phiture.herokuapp.com/team
+class TeamView(ListView): 
 	template_name = "players/team.html"
 
 	def get_queryset(self, *args, **kwargs):
-		budget=self.request.session['bla']
-		if budget is not None:
-			queryset = Player.objects.build_team(budget)
-			return Player.objects.build_team(budget)
+		user_input=self.request.session['budget']
+		if user_input is not None:
+			queryset = Player.objects.build_team(user_input)
+			return queryset
 		queryset = None
 		return queryset
 
-	def get_context_data(self, *args, **kwargs): #overwrite method
-		context = super(TeamView, self).get_context_data(*args, **kwargs)  #default method
-		context['budget'] = self.request.session['bla']
+	def get_context_data(self, *args, **kwargs): 
+		context = super(TeamView, self).get_context_data(*args, **kwargs)  
+		context['budget'] = self.request.session['budget']
 		qs = self.get_queryset()
 		if qs is not None:
 			context['avg'] = qs.aggregate(Avg('overall'))

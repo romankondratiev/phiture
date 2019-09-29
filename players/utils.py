@@ -3,7 +3,7 @@ import csv
 from players.models import Player
 
 
-def turn_to_int(value):
+def turn_to_int(value): #Used to turn Market Value field to a integer
     s = value
     s = s[1:]
     last = s[-1]
@@ -25,7 +25,7 @@ def turn_to_int(value):
 
 
 
-def read_table(sometable):
+def read_table(sometable): # To populate database with data from .csv file
 	df = pd.read_csv(sometable, sep=',', usecols = ['Name', 'Age', 'Photo', 'Nationality', 'Overall','Club', 'Value','Position'])
 	for index, row in df.iterrows():
 		Player.objects.get_or_create(
