@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <style type="text/css">
+      li{
+        padding: 5px;
+      }
+      body, th, td{
+        background-color: #333132; 
+        color: #29ef8f
+      }
+      .row{
+        padding-top: 20px;
+        width: 100%;
+      }
+      .form-control{
+        border-radius: 2rem !important;
+        min-width: 80%;
+        height:50px;
+      }
+      .input-group{
+        justify-content: center
+      }
+      input{
+        height: 50px;
+        min-width: 90%;
+        border-radius: 50px !important;
+      }
+      a{
+        color: #29ef8f !important;
+        text-decoration: none;
+      }
+      a:hover{
+        text-decoration: none;
+      }
+      .search{
+        height: 100vh;
+        background-color: #333132;
+        color: #29ef8f;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      .search-icon{
+        margin-left: 5px;
+        font-size: 1.2em;
+        color: #29ef8f
+      }
+      .search-icon2{
+        margin-left: 0px;
+        font-size: 1.2em;
+        padding-right:0px
+      }
+      .team{
+        height: 100vh;
+        background-color: #29ef8f;
+        color: #333132;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+    </style>
+    <title>Phiture</title>
+  </head>
+
+  <body>
+
+
+    <div class='row p-0'>
+
+      <div class='col-6 mx-auto search'>
+        <div class='row' >
+          <div class='col-12 text-center'>
+            <h1> <a  href='{% url "search" %}'> Search for players </a> </h1>
+          </div>
+          <div class='col mx-auto'>
+            <form action='{% url "search" %}' class="search-form form">
+              <div class='input-group'>
+                <input class="form-control" id='searchAutoComplete' type="text" placeholder="Enter name, club or nationality of the player" name='q' value='{{ request.GET.q }}' aria-label="Search">
+              <div class="input-group-append">
+                <button class="btn search-icon" type='submit'><i class="fa fa-search fa-1x"></i></button>
+              </div>
+            </div>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <div class='col-6 mx-auto team'>
+        <div class='row'>
+          <div class='col-12'>
+            <h1 class='text-center'>Build your perfect team</h1>
+          </div>
+          <div class='col mx-auto'>
+            <form  class="search-form form" method="post"  >
+            	<div class='input-group'  >
+                {% csrf_token %}
+                {{ form }}
+          		<div class="input-group-append" >
+          			<button class="btn search-icon2" type='submit'><i class="fa fa-search fa-1x"></i></button>
+          		</div>
+            	</div>
+            </form>
+          </div>
+        </div>
+        </div>
+    </div>
+
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script src="https://kit.fontawesome.com/0d5fe028d4.js" crossorigin="anonymous"></script>
+
+    <script type="text/javascript">
+
+      $(function() {
+      $("label").attr("hidden",true);
+      });
+
+    </script>
+
+  </body>
+</html>
+
+

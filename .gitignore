@@ -4,6 +4,9 @@ bin/
 include/
 pip-selfcheck.json
 
+#settings
+settings/
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

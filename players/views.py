@@ -7,70 +7,60 @@ from django.http import JsonResponse
 from django.views.generic import ListView
 from players.models import Player
 from django.core.paginator import Paginator
-
-# Create your views here.
-
-
-def dataview(request):
-
-	# table = read_table(os.path.join(BASE_DIR, 'data.csv'))
-
-	return render(request, "players/data.html", {})
-
-
-# def searchview(request):
-
-# 	# table = read_table(os.path.join(BASE_DIR, 'data.csv'))
-
-# 	return render(request, "players/data.html", {})
-
-
+from django.http import HttpResponseRedirect
+from django.shortcuts import render
+from .forms import TeamForm
+from django.views.generic.edit import FormView
+from django.db.models import Avg
 
 
 
 class SearchView(ListView):
-	#queryset = Product.objects.all()
-
-	template_name = "players/data.html"
+	template_name = "players/search.html"
 	paginate_by = 10
-	# def get(self, request, *args, **kwargs):
-	# 	if request.is_ajax():
-	# 		query=request.GET.get('q')
-	# 		filtered_products = []
-	# 		all_ = Product.objects.all()
-	# 		all_products= []
-	# 		for x in all_:
-	# 			all_products.append(x.title)
-				
-	# 		# length = len(all_)
-	# 		# for idx, x in all_:
-	# 		# 	filtered_products[length-length] = x
-
-	# 		print(filtered_products)
-	# 		json_data={
-	# 			"query": query,
-	# 			"filtered_products": all_products,
-	# 		}
-	# 		return JsonResponse(json_data, status=200)
-	# 	return super(SearchProductView, self).get(request, *args, **kwargs)
-
-	# def get_context_data(self,*args,**kwargs):
-	# 	context=super(SearchView,self).get_context_data(*args,**kwargs)
-
-	# 	# user = self.request.user
-		
-	# 	# query=self.request.GET.get('q')
-	# 	context['query']=self.request.GET.get('q')
-	# 	context['user']=self.request.user
-	# 	# context['wishes']= wished_products
-	# 	return context
+	
+	#table = read_table(os.path.join(BASE_DIR, 'data.csv'))
 
 	def get_queryset(self, *args, **kwargs):
 		query=self.request.GET.get('q', None)
-		print(query)
-		
 		if query is not None:
 			queryset = Player.objects.search(query)
 			return Player.objects.search(query)
 		queryset = Player.objects.all()
 		return queryset
+
+
+
+class HomeView(FormView):
+	template_name = "players/home.html"
+	paginate_by = 10
+	form_class = TeamForm
+	success_url = '/team'
+
+	def form_valid(self, form):
+		budget = form.cleaned_data.get('budget')
+		self.request.session['bla'] = form.cleaned_data.get('budget')
+		return super(HomeView, self).form_valid(form)
+
+
+
+class TeamView(ListView): # Go to Result if team is found
+	template_name = "players/team.html"
+
+	def get_queryset(self, *args, **kwargs):
+		budget=self.request.session['bla']
+		if budget is not None:
+			queryset = Player.objects.build_team(budget)
+			return Player.objects.build_team(budget)
+		queryset = None
+		return queryset
+
+	def get_context_data(self, *args, **kwargs): #overwrite method
+		context = super(TeamView, self).get_context_data(*args, **kwargs)  #default method
+		context['budget'] = self.request.session['bla']
+		qs = self.get_queryset()
+		if qs is not None:
+			context['avg'] = qs.aggregate(Avg('overall'))
+		return context
+
+
