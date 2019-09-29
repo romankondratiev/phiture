@@ -6,7 +6,8 @@ pip-selfcheck.json
 
 #settings
 # settings/
-# phiture/settings/
+phiture/settings/local.py
+phiture/settings/production.py
 
 aws/
 phiture/aws/
